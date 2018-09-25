@@ -1,0 +1,17 @@
+{
+  "name": "loconox-datetimepicker",
+  "version": "0.0.2",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "moment": "^2.22.2",
+    "font-awesome": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loconox/loconox-datetimepicker"
+  },
+  "bugs": {
+    "url": "https://github.com/loconox/loconox-datetimepicker/issues"
+  }
+}

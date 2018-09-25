@@ -1,0 +1,13 @@
+<table class="calendar-header" [hidden]="hidden">
+  <tr>
+    <td class="calendar-header-day" *ngFor="let day of moment.weekdaysShort()">{{ day }}</td>
+  </tr>
+</table>
+<table class="calendar-days" (click)="_select($event);" [hidden]="hidden">
+  <tr *ngFor="let week of monthDays">
+    <td *ngFor="let day of week"
+      [ngClass]="{'calendar-day': day.day != null,'today': day.date.isSame(_today, 'day'), 'selected-day': day.date.isSame(selected, 'day')}">
+      <span *ngIf="day.date.isValid()" [attr.data-label]="day.date.format('YYYY-MM-DD')">{{day.day}}</span>
+    </td>
+  </tr>
+</table>

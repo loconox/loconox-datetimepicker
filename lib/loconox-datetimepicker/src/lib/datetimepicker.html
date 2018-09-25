@@ -1,0 +1,96 @@
+<div *ngIf="opened" [id]="id" class="loconox-calendar" (clickOutside)="close()">
+
+  <div  class="lc-date-popover" [ngClass]="{'banner-true': settings.bigBanner == true}">
+    <div class="lc-banner" *ngIf="_selected && settings.bigBanner">
+      <div class="lc-day-row">{{ _selected.format('dddd')}}</div>
+      <div class="lc-date-row">{{_selected.format('DD')}}</div>
+      <div class="lc-my-sec">
+        <div class="lc-month-row">
+          <div>{{_selected.format('MMMM')}}</div>
+        </div>
+        <div class="lc-year-row">
+          <div >{{_selected.format('YYYY')}}</div>
+        </div>
+      </div>
+      <div class="lc-time-sec ng-scope">
+        <div *ngIf="settings.timePicker" class="time" (click)="toggleTimeView()">
+          <span *ngIf="_selected && settings.hour24">
+            {{_selected.format('HH')}} : {{_selected.format('mm')}} <span
+            class="fa fa-clock-o"></span>
+          </span>
+          <span *ngIf="_selected && !settings.hour24">
+            {{_selected.format('hh')}} : {{_selected.format('mm')}} {{_selected.format('a')}} <span
+            class="fa fa-clock-o"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="month-title">
+      <i class="lc-prev fa fa-angle-left" (click)="prevMonth($event)"></i>
+      <div class="month-year" (click)="toggleMonthView()">{{viewDate.format('MMMM')}}</div>
+      <i class="lc-next fa fa-angle-right" (click)="nextMonth($event)"></i>
+    </div>
+
+    <div class="year-title">
+      <div class="year-dropdown" (click)="toggleYearView()">
+        {{viewDate.format('YYYY')}}
+        <i [hidden]="yearView" class="fa fa-angle-down"></i>
+        <i [hidden]="!yearView" class="fa fa-angle-up"></i>
+      </div>
+    </div>
+
+    <div class="months-view" [hidden]="!monthsView" (click)="setMonth($event)">
+        <span *ngFor="let month of moment.monthsShort()"
+              [ngClass]="{'current-month': month == moment.monthsShort(viewDate.month())}"
+              id="{{month}}">{{month}}</span>
+    </div>
+
+    <div class="years-view" [hidden]="!yearView">
+      <div class="fa fa-angle-left prev" (click)="_generateYearList('prev')"></div>
+      <div class="fa fa-angle-right next" (click)="_generateYearList('next')"></div>
+      <div class="years-list-view" (click)="setYear($event)">
+        <span *ngFor="let year of yearsList" [ngClass]="{'current-year': year == viewDate.year()}"
+              id="{{year}}">{{year}}</span>
+      </div>
+    </div>
+
+    <div class="time-view" [hidden]="!timeView">
+      <div class="time">
+        <div class="hour">
+          <span class="fa fa-plus inc-btn" (click)="incHour()"></span>
+          <input type="number" value="{{hourValue}}" [(ngModel)]="hourValue" autofocus/>
+          <span class="fa fa-minus dec-btn" (click)="decHour()"></span>
+        </div>
+        <div class="time-divider">:</div>
+        <div class="minutes">
+          <span class="fa fa-plus inc-btn" (click)="incMinutes()"></span>
+          <input type="number" value="{{minValue}}" [(ngModel)]="minValue"/>
+          <span class="fa fa-minus dec-btn" (click)="decMinutes()"></span>
+        </div>
+      </div>
+      <div class="meridian" *ngIf="!settings.hour24">
+        <div class="loconox-btn-group">
+          <button [ngClass]="{'active': timeViewMeridian == 'AM'}" class="button" ng-model="timeViewMeridian"
+                  (click)="toggleMeridian('AM')">AM
+          </button>
+          <button [ngClass]="{'active': timeViewMeridian == 'PM'}" class="button" ng-model="timeViewMeridian"
+                  (click)="toggleMeridian('PM')">PM
+          </button>
+        </div>
+      </div>
+      <div class="time-view-btn">
+        <button class="button" (click)="setTimeView()"><span class="fa fa-check"></span></button>
+      </div>
+    </div>
+
+    <loconox-datetimepicker-calendar [hidden]="monthsView || yearView || timeView" (selectedChange)="select($event)"
+                                   [selected]="_selected" [viewDate]="viewDate" [parent]="this" ></loconox-datetimepicker-calendar>
+
+    <div class="cal-util" *ngIf="!settings.bigBanner">
+      <div class="clock-icon">
+        <i class="fa fa-clock-o" aria-hidden="true" (click)="toggleTimeView()"></i>
+      </div>
+    </div>
+  </div>
+</div>

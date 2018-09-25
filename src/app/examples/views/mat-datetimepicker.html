@@ -1,0 +1,51 @@
+<h2 class="example-title">{{title}}</h2>
+
+
+<div class="mr-auto ml-auto">
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Basic</label>
+    <div class="col-sm-10">
+      <mat-form-field>
+        <input matInput [loconoxMatDatetimePicker]="pickerBasic" (click)="pickerBasic.open($event)"
+               [format]="format">
+        <loconox-datetimepicker #pickerBasic [settings]="settings"></loconox-datetimepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Complex</label>
+    <div class="col-sm-10">
+      <mat-form-field>
+        <input matInput [loconoxMatDatetimePicker]="pickerComplex" placeholder="Complex"
+               (click)="pickerComplex.open($event)" [format]="format">
+        <loconox-datetimepicker #pickerComplex [settings]="settings"></loconox-datetimepicker>
+        <mat-hint>Enter a date please</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Disabled</label>
+    <div class="col-sm-10">
+      <mat-form-field>
+        <input matInput [loconoxMatDatetimePicker]="pickerDisabled" placeholder="Disabled"
+               (click)="pickerDisabled.open($event)" [format]="format" disabled>
+        <loconox-datetimepicker #pickerDisabled [settings]="settings"></loconox-datetimepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Icon</label>
+    <div class="col-sm-10">
+      <mat-form-field>
+        <input matInput [loconoxMatDatetimePicker]="pickerIcon" placeholder="With icon"
+               (click)="pickerIcon.open($event)" [format]="format">
+        <mat-icon matSuffix>event</mat-icon>
+        <loconox-datetimepicker #pickerIcon [settings]="settings"></loconox-datetimepicker>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
