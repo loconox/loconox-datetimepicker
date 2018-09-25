@@ -3,6 +3,7 @@ $secondary-color: #ffffff;
 
 .loconox-calendar {
   position: relative;
+  box-sizing: border-box;
 
   .lc-date-container {
     float: left;

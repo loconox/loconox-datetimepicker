@@ -1,0 +1,11 @@
+
+# compiled output
+/dist
+
+# dependencies
+/node_modules
+/lib/loconox-datetimepicker/node_modules/
+
+# misc
+/.sass-cache
+npm-debug.log
