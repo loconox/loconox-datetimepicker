@@ -11,7 +11,6 @@ export class DateTimePickerLocalizedExample {
   settings = {
     bigBanner: true,
     timePicker: true,
-    format: 'YYYY-MM-DD HH:mm',
     defaultOpen: true,
     locale: 'fr',
     hour24: true,

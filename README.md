@@ -37,17 +37,11 @@ import { Component, OnInit } from '@angular/core';
 
 export class AppComponent implements OnInit {
     
-	date: Date = new Date();
 	settings = {
 		bigBanner: true,
 		timePicker: false,
-		format: 'YYYY-MM-DD',
 		defaultOpen: true
 	}
-	constructor(){}
-    ngOnInit(){
-       
-    }
 }
 
 ```
@@ -55,8 +49,8 @@ export class AppComponent implements OnInit {
 Add the following component tag in the template where your want to place the datepicker
 
 ```html
-
-<loconox-datetimepicker [(ngModel)]="date" [settings]="settings"></loconox-datetimepicker>
+  <input [loconoxDatetimePicker]="picker" (click)="picker.open($event)">
+  <loconox-datetimepicker #picker [settings]="settings"></loconox-datetimepicker>
 
 ```
 
@@ -67,7 +61,6 @@ Following `settings` object properties can be used to configure the component.
 
 |Property	|Type	|Default	|Description	|
 |:--- |:--- |:--- |:--- |
-|format|String|YYYY-MM-DD HH:mm|Date format of the selected date.|
 |bigBanner|Boolean|true| The banner section to show the date details.  |
 |defaultOpen|Boolean|false|To open the datepicker popover on load. Default is set to false.|
 |timePicker|Boolean|false|Enable time picker feature.|
@@ -78,18 +71,42 @@ Following `settings` object properties can be used to configure the component.
 
 ## Callback Methods
 
-- `onDateSelect`
+- `dateChange`
 
-Define a callback method to be called on select of the date.
+Define a callback method to be called on date change. `$event` is a `LoconoxDatepickerInputEvent`.
 
 ```html
-  
-  <loconox-datetimepicker (onDateSelect)="onDateSelect($event)" 
-			[(ngModel)]="date" 
-			[settings]="settings" >
-  </loconox-datetimepicker>
-
+  <input [loconoxDatetimePicker]="picker" (click)="picker.open($event)" (dateChange)="onDateChange($event)">
+  <loconox-datetimepicker #picker [settings]="settings"></loconox-datetimepicker>
 ```
+
+- `dateInput`
+
+Define a callback method to be called on select of the date. `$event` is a `LoconoxDatepickerInputEvent`.
+
+```html
+  <input [loconoxDatetimePicker]="picker" (click)="picker.open($event)" (dateInput)="onDateInput($event)">
+  <loconox-datetimepicker #picker [settings]="settings"></loconox-datetimepicker>
+```
+
+- `opened`
+
+Define a callback method to be called on the open of the calendar.
+
+```html
+  <input [loconoxDatetimePicker]="picker" (click)="picker.open($event)">
+  <loconox-datetimepicker #picker [settings]="settings" (opened)="onOpen($event)"></loconox-datetimepicker>
+```
+
+- `closed`
+
+Define a callback method to be called on the close of the calendar.
+
+```html
+  <input [loconoxDatetimePicker]="picker" (click)="picker.open($event)">
+  <loconox-datetimepicker #picker [settings]="settings" (closed)="onClose($event)"></loconox-datetimepicker>
+```
+
 ## Date Formats Support
 
 format string is based on the formats supported by moment.js. See [moment.js documentation](http://momentjs.com/docs/#/displaying/format/).

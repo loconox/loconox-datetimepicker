@@ -8,10 +8,8 @@ export class DatePickerExample {
   settings = {
     bigBanner: true,
     timePicker: false,
-    format: 'YYYY-MM-DD',
     defaultOpen: true,
     closeOnSelect: false,
     rangepicker: false
   };
-  date: Date;
 }
