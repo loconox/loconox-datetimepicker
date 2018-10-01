@@ -13,6 +13,7 @@ import {Subject, Subscription} from "rxjs";
 import {Moment} from "moment";
 import {LoconoxDatetimePickerInput} from "./datetimepicker-input";
 import {CalendarComponent} from "./calendar/calendar.component";
+import {LoconoxDatetimePickerColor} from "./color";
 
 const moment = moment_;
 
@@ -30,14 +31,13 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
   moment: any;
 
   // Today
-  viewDate: Moment = moment();
+  viewDate: Moment;
 
   hourValue = 0;
   minValue = 0;
   timeViewMeridian = '';
   timeView = false;
   yearView: Boolean = false;
-  yearsList: Array<any> = [];
   monthsView = false;
 
   defaultSettings: Settings = {
@@ -48,6 +48,23 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     locale: 'en',
     hour24: false
   };
+
+  private _defaultColor: LoconoxDatetimePickerColor = new LoconoxDatetimePickerColor({
+    primary: '#1565c0',
+    secondary: '#ffffff',
+    third: '#000000',
+  });
+
+  @Input()
+  get color(): LoconoxDatetimePickerColor {
+    return this._color;
+  }
+
+  set color(color: LoconoxDatetimePickerColor) {
+    this._color = color;
+  }
+
+  protected _color: LoconoxDatetimePickerColor = this._defaultColor;
 
   @Input()
   settings: Settings;
@@ -134,6 +151,8 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
   constructor() {
     this.moment = moment;
+    this.viewDate = moment();
+    this._viewChanged.next(this.viewDate);
   }
 
   /** Selects the given date */
@@ -217,21 +236,6 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     }
   }
 
-  _generateYearList(param: string) {
-    let startYear = null;
-    if (param === 'next') {
-      startYear = this.yearsList[8] + 1;
-    } else if (param === 'prev') {
-      startYear = this.yearsList[0] - 9;
-    } else {
-      const currentYear = this._selected ? this._selected.year() : this.viewDate.year();
-      startYear = currentYear - 4;
-    }
-    for (let k = 0; k < 9; k++) {
-      this.yearsList[k] = startYear + k;
-    }
-  }
-
   getMonthLength(month: number, year: number): number {
     const monthLength = moment(year + '-' + month, 'YYYY-MM').endOf('month').format('DD');
 
@@ -248,7 +252,7 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     this.yearView = !this.yearView;
     this.monthsView = false;
     this.timeView = false;
-    this._generateYearList('current');
+    //this._generateYearList('current');
   }
 
   toggleTimeView() {
@@ -286,17 +290,14 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     this.timeView = !this.timeView;
   }
 
-  setYear(evt: any) {
-    if (evt.target.getAttribute('id')) {
-      const selectedYear = parseInt(evt.target.getAttribute('id'), 10);
-      if (!this._selected) {
-        this._selected = this.viewDate.clone();
-      }
-      this._selected.years(selectedYear);
-      this.viewDate.year(selectedYear);
-      this._viewChanged.next(this.viewDate);
-      this.yearView = !this.yearView;
+  setYear(selectedYear: number) {
+    if (!this._selected) {
+      this._selected = this.viewDate.clone();
     }
+    this._selected.years(selectedYear);
+    this.viewDate.year(selectedYear);
+    this._viewChanged.next(this.viewDate);
+    this.yearView = !this.yearView;
   }
 
   setMonth(evt: any) {

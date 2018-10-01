@@ -1,40 +1,16 @@
-$base-color: #1565c0;
-$secondary-color: #ffffff;
+* {
+  box-sizing: border-box;
+}
 
 .loconox-calendar {
   position: relative;
-  box-sizing: border-box;
-
-  .lc-date-container {
-    float: left;
-    width: 100%;
-    height: 30px;
-    border: 1px solid $base-color;
-    margin-bottom: 1px;
-    font-size: 16px;
-    padding: 5px;
-    text-align: left;
-    cursor: pointer;
-    background: #fff;
-    line-height: 20px;
-    > span {
-      color: $base-color;
-    }
-    > i {
-      float: right;
-      font-size: 20px;
-      color: $base-color;
-    }
-  }
 
   .lc-date-popover {
     font-size: 14px;
-    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+    box-shadow: 5px 5px 20px 5px rgba(0,0,0,0.2);
     margin: 0 auto;
     perspective: 1000px;
     float: left;
-    background: #fff;
-    background: $secondary-color;
     position: fixed;
     width: 90%;
     top: 5%;
@@ -50,11 +26,9 @@ $secondary-color: #ffffff;
       float: left;
       width: 100%;
       font-size: 54px;
-      background: $base-color;
 
       .lc-day-row {
         padding: 5px 0;
-        color: $secondary-color;
         width: 100%;
         float: left;
         font-size: 3vh;
@@ -64,7 +38,6 @@ $secondary-color: #ffffff;
       .lc-date-row {
         display: inline-block;
         font-size: 25vw;
-        color: $secondary-color;
         padding: 5px;
         width: 50%;
         float: left;
@@ -82,14 +55,12 @@ $secondary-color: #ffffff;
         .lc-month-row {
           padding: 25px 0 0 0;
           font-size: 8vw;
-          color: $secondary-color;
           width: 100%;
           float: left;
         }
 
         .lc-year-row {
           text-align: left;
-          color: $secondary-color;
           font-size: 7vw;
           float: left;
           width: 100%;
@@ -97,15 +68,6 @@ $secondary-color: #ffffff;
         }
 
         .lc-month-row, .lc-year-row {
-          > i {
-            float: right;
-            font-size: 12px;
-            padding: 10px 6px;
-            cursor: pointer;
-            :hover {
-              color: rgba(255, 255, 255, 0.63);
-            }
-          }
           > div:nth-child(1) {
             float: left;
             text-align: left;
@@ -114,7 +76,6 @@ $secondary-color: #ffffff;
       }
 
       .lc-time-sec {
-        color: $secondary-color;
         text-align: center;
         padding: 0 10px 10px;
         float: left;
@@ -133,11 +94,6 @@ $secondary-color: #ffffff;
       float: left;
       width: 65%;
       padding: 10px 0 10px;
-      color: $secondary-color;
-      background: $base-color;
-      > .fa:hover {
-        color: #ccc;
-      }
 
       .month-year {
         float: left;
@@ -171,8 +127,6 @@ $secondary-color: #ffffff;
       float: left;
       line-height: 55px;
       font-size: 18px;
-      color: $secondary-color;
-      background: $base-color;
       i {
         float: right;
         padding: 13px 10px 7px 0;
@@ -184,70 +138,29 @@ $secondary-color: #ffffff;
       }
     }
 
-    .months-view, .years-view {
-      background: #fff;
+    .months-view {
       width: 100%;
       top: 210px;
-      width: 100%;
       height: calc(100% - 210px);
       bottom: 0;
       text-align: center;
     }
 
-    .months-view, .years-list-view  {
-      .current-month, .current-year {
-        border: 1px solid $base-color;
-        background: none;
-      }
+    .months-view {
       > span {
         display: inline-block;
         width: 25%;
         padding: 25px 0;
         cursor: pointer;
         font-size: 16px;
-        &:hover {
-          background: $base-color;
-          color: #fff;
-        }
-      }
-    }
-
-    .years-view {
-      > .prev, > .next {
-        color: #8e8e8e;
-        float: left;
-        width: 30px;
-        padding: 85px 0;
-        cursor: pointer;
-        font-size: 52px;
-        &:hover {
-          color: #ccc;
-        }
-      }
-      > .next {
-        float: right;
-      }
-      > span {
-        width: 33.3333%;
-      }
-
-      .years-list-view {
-        float: left;
-        width: calc(100% - 60px);
-        height: 100%;
-        > span {
-          width: 33.3333%
-        }
       }
     }
 
     .time-view {
       float: left;
-      background: #fff;
       width: 100%;
       top: 40px;
       padding: 35px;
-      border-top: 1px solid $base-color;
       &-btn {
         text-align: center;
       }
@@ -257,7 +170,6 @@ $secondary-color: #ffffff;
         margin: 0 auto;
         display: inline-block;
         padding: 5px 0 0 0;
-        color: $base-color;
         font-weight: 300;
         input {
           display: inline-block;
@@ -270,8 +182,6 @@ $secondary-color: #ffffff;
           font-size: 32px;
           font-weight: 300;
           padding: 0 10px;
-          text-align: center;
-          color: $base-color;
         }
       }
       .time-divider {
@@ -307,9 +217,8 @@ $secondary-color: #ffffff;
       .inc-btn, .dec-btn {
         font-size: 14px;
         display: block;
-        color: #8e8e8e;
         &:hover {
-          color: #ccc;
+          cursor: pointer;
         }
       }
       .meridian {
@@ -334,10 +243,7 @@ $secondary-color: #ffffff;
     .button {
       width: 100%;
       padding: 10px;
-      background: $base-color;
-      color: #fff;
       margin: 0 auto;
-      border: 1px solid $base-color;
       border-radius: 3px;
       cursor: pointer;
     }
@@ -348,18 +254,11 @@ $secondary-color: #ffffff;
 
     .loconox-btn-group {
       display: inline-flex;
-      > .active {
-        background: $base-color !important;
-        color: #fff !important;
-      }
       > .button {
-        border: 1px solid $base-color;
-        background: #fff;
         border-radius: 3px;
         float: left;
         margin: 0;
         align-items: initial;
-        color: $base-color;
         width: auto;
         padding: 5px 10px;
       }
@@ -378,11 +277,8 @@ $secondary-color: #ffffff;
       width: 100%;
       float: left;
       bottom: 0;
-      background: #fff;
-      border-top: 1px solid #f2f2f2;
-      .clock-icon {
+      .icon {
         text-align: center;
-        color: $base-color;
       }
     }
 

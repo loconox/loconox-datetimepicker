@@ -1,12 +1,14 @@
-<table class="calendar-header" [hidden]="hidden">
+<table class="calendar-header" [hidden]="hidden" [ngStyle]="{background: color.secondary(), color: color.primary()}">
   <tr>
     <td class="calendar-header-day" *ngFor="let day of moment.weekdaysShort()">{{ day }}</td>
   </tr>
 </table>
-<table class="calendar-days" (click)="_select($event);" [hidden]="hidden">
+<table class="calendar-days" (click)="_select($event);" [hidden]="hidden" [ngStyle]="{background: color.secondary(), color: color.primary()}">
   <tr *ngFor="let week of monthDays">
     <td *ngFor="let day of week"
-      [ngClass]="{'calendar-day': day.day != null,'today': day.date.isSame(_today, 'day'), 'selected-day': day.date.isSame(selected, 'day')}">
+        [ngStyle]="day.date.isSame(_today, 'day') && day.day != null ?  {background: 'none', border: '1px solid ' + color.primary()} : day.date.isSame(selected, 'day') && day.day != null ? {background: color.primary(), color: color.secondary()} : {}"
+        [loconoxHightlight]="{bg: color.primary(), color: color.secondary(), cond: day.day != null}"
+      [ngClass]="{'calendar-day': day.day != null}">
       <span *ngIf="day.date.isValid()" [attr.data-label]="day.date.format('YYYY-MM-DD')">{{day.day}}</span>
     </td>
   </tr>

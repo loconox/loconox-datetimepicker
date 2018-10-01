@@ -3,6 +3,7 @@ import * as moment_ from 'moment';
 import {Moment} from "moment";
 import {LoconoxDatetimePicker} from "../datetimepicker";
 import {Subscription} from "rxjs";
+import {LoconoxDatetimePickerColor} from "../color";
 
 const moment = moment_;
 
@@ -14,6 +15,8 @@ const moment = moment_;
 export class CalendarComponent implements OnInit, OnDestroy {
 
   _today: Moment = moment();
+
+  @Input() color: LoconoxDatetimePickerColor;
 
   /** The datetimepicker that this input is associated with. */
   @Input()

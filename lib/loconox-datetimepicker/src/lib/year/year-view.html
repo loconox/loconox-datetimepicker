@@ -1,0 +1,14 @@
+<div class="years-view" [hidden]="hidden">
+  <div class="fa fa-angle-left prev" (click)="generateYearList('prev')"
+       [ngStyle]="{background: color.secondary(), color: color.primary()}"
+       [lcStyleOver]="{color: color.primary(0.3)}"></div>
+  <div class="fa fa-angle-right next" (click)="generateYearList('next')"
+       [ngStyle]="{background: color.secondary(), color: color.primary()}"
+       [lcStyleOver]="{color: color.primary(0.3)}"></div>
+  <div class="years-list-view" (click)="selectYear($event)"
+       [ngStyle]="{background: color.secondary(), color: color.primary()}">
+        <span *ngFor="let year of yearsList" [ngStyle]="year == viewDate.year() ? {background: 'none', border: '1px solid ' + color.primary()} : {}" [ngClass]="{'current-year': year == viewDate.year()}"
+              [loconoxHightlight]="{bg: color.primary(), color: color.secondary()}"
+              id="{{year}}">{{year}}</span>
+  </div>
+</div>

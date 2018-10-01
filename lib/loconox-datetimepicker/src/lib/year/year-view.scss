@@ -1,0 +1,41 @@
+.years-view {
+  width: 100%;
+  top: 210px;
+  height: calc(100% - 210px);
+  bottom: 0;
+  text-align: center;
+
+  > .prev, > .next {
+    float: left;
+    width: 30px;
+    padding: 85px 0;
+    cursor: pointer;
+    font-size: 52px;
+  }
+  > .next {
+    float: right;
+  }
+  > span {
+    width: 33.3333%;
+  }
+
+  .years-list-view {
+    float: left;
+    width: calc(100% - 60px);
+    height: 100%;
+    > span {
+      width: 33.3333%
+    }
+
+    > span {
+      display: inline-block;
+      width: 33%;
+      padding: 25px 0;
+      cursor: pointer;
+      font-size: 16px;
+      &.current-year {
+        padding: 24px 0;
+      }
+    }
+  }
+}
