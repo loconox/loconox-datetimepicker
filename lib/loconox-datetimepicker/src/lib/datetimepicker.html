@@ -1,7 +1,7 @@
 <div *ngIf="opened" [id]="id" class="loconox-calendar" (clickOutside)="close()">
-
-  <div  class="lc-date-popover" [ngClass]="{'banner-true': settings.bigBanner == true}">
-    <div class="lc-banner" *ngIf="_selected && settings.bigBanner" [ngStyle]="{background: color.primary(), color: color.secondary()}">
+  <div #popover class="lc-date-popover" [ngClass]="{'banner-true': settings.bigBanner == true, 'placement-top': _top}">
+    <div class="lc-banner" *ngIf="_selected && settings.bigBanner"
+         [ngStyle]="{background: color.primary(), color: color.secondary()}">
       <div class="lc-day-row">{{ _selected.format('dddd')}}</div>
       <div class="lc-date-row">{{_selected.format('DD')}}</div>
       <div class="lc-my-sec">
@@ -9,7 +9,7 @@
           <div>{{_selected.format('MMMM')}}</div>
         </div>
         <div class="lc-year-row">
-          <div >{{_selected.format('YYYY')}}</div>
+          <div>{{_selected.format('YYYY')}}</div>
         </div>
       </div>
       <div class="lc-time-sec ng-scope">
@@ -29,64 +29,84 @@
     <div class="month-title" [ngStyle]="{background: color.primary(), color: color.secondary()}">
       <i class="lc-prev fa fa-angle-left" (click)="prevMonth($event)" [lcStyleOver]="{color: color.secondary(0.3)}"></i>
       <div class="month-year" (click)="toggleMonthView()">{{viewDate.format('MMMM')}}</div>
-      <i class="lc-next fa fa-angle-right" (click)="nextMonth($event)" [lcStyleOver]="{color: color.secondary(0.3)}"></i>
+      <i class="lc-next fa fa-angle-right" (click)="nextMonth($event)"
+         [lcStyleOver]="{color: color.secondary(0.3)}"></i>
     </div>
 
     <div class="year-title" [ngStyle]="{background: color.primary(), color: color.secondary()}">
       <div class="year-dropdown" (click)="toggleYearView()">
         {{viewDate.format('YYYY')}}
-        <i [hidden]="yearView" class="fa fa-angle-down" [lcStyleOver]="{color: color.secondary(0.3)}"></i>
-        <i [hidden]="!yearView" class="fa fa-angle-up" [lcStyleOver]="{color: color.secondary(0.3)}"></i>
+        <span [hidden]="yearView">
+          <i class="fa fa-angle-down" [lcStyleOver]="{color: color.secondary(0.3)}"></i>
+        </span>
+        <span [hidden]="!yearView">
+          <i class="fa fa-angle-up" [lcStyleOver]="{color: color.secondary(0.3)}"></i>
+        </span>
       </div>
     </div>
 
-    <div class="months-view" [hidden]="!monthsView" (click)="setMonth($event)" [ngStyle]="{background: color.secondary(), color: color.primary()}">
+    <div class="months-view" [hidden]="!monthsView" (click)="setMonth($event)"
+         [ngStyle]="{background: color.secondary(), color: color.primary()}">
         <span *ngFor="let month of moment.monthsShort()"
               [ngStyle]="month == moment.monthsShort(viewDate.month()) ?  {background: 'none', border: '1px solid ' + color.primary()} : {}"
               [loconoxHightlight]="{bg: color.primary(), color: color.secondary()}" id="{{month}}">{{month}}</span>
     </div>
 
     <year-view [hidden]="!yearView" (yearChange)="setYear($event)"
-    [viewDate]="viewDate" [parent]="this" [color]="color"></year-view>
+               [viewDate]="viewDate" [parent]="this" [color]="color"></year-view>
 
     <div class="time-view" [hidden]="!timeView" [ngStyle]="{background: color.secondary()}">
       <div class="time">
         <div class="hour">
-          <span class="fa fa-plus inc-btn" (click)="incHour()" [ngStyle]="{color: color.third(), opacity: 0.5}" [lcStyleOver]="{color: color.third(0.3)}"></span>
-          <input type="number" value="{{hourValue}}" [(ngModel)]="hourValue" [ngStyle]="{color: color.primary()}" autofocus/>
-          <span class="fa fa-minus dec-btn" (click)="decHour()" [ngStyle]="{color: color.third(), opacity: 0.5}" [lcStyleOver]="{color: color.third(0.3)}"></span>
+          <span class="fa fa-plus inc-btn" (click)="incHour()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+                [lcStyleOver]="{color: color.third(0.3)}"></span>
+          <input type="number" value="{{hourValue}}" [(ngModel)]="hourValue" [ngStyle]="{color: color.primary()}"
+                 autofocus/>
+          <span class="fa fa-minus dec-btn" (click)="decHour()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+                [lcStyleOver]="{color: color.third(0.3)}"></span>
         </div>
         <div class="time-divider" [ngStyle]="{color: color.third()}">:</div>
         <div class="minutes">
-          <span class="fa fa-plus inc-btn" (click)="incMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}" [lcStyleOver]="{color: color.third(0.3)}"></span>
-          <input type="number" value="{{minValue}}" [(ngModel)]="minValue" [ngStyle]="{color: color.primary()}" />
-          <span class="fa fa-minus dec-btn" (click)="decMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}" [lcStyleOver]="{color: color.third(0.3)}"></span>
+          <span class="fa fa-plus inc-btn" (click)="incMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+                [lcStyleOver]="{color: color.third(0.3)}"></span>
+          <input type="number" value="{{minValue}}" [(ngModel)]="minValue" [ngStyle]="{color: color.primary()}"/>
+          <span class="fa fa-minus dec-btn" (click)="decMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+                [lcStyleOver]="{color: color.third(0.3)}"></span>
         </div>
       </div>
       <div class="meridian" *ngIf="!settings.hour24">
         <div class="loconox-btn-group">
           <button [ngClass]="{'active': timeViewMeridian == 'AM'}" class="button" ng-model="timeViewMeridian"
                   (click)="toggleMeridian('AM')"
-                  [ngStyle]="timeViewMeridian == 'AM' ? {background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()} : {background: color.secondary(), color: color.primary(), border: '1px solid '+color.primary()}">AM
+                  [ngStyle]="timeViewMeridian == 'AM' ? {background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()} : {background: color.secondary(), color: color.primary(), border: '1px solid '+color.primary()}">
+            AM
           </button>
           <button [ngClass]="{'active': timeViewMeridian == 'PM'}" class="button" ng-model="timeViewMeridian"
                   (click)="toggleMeridian('PM')"
-                  [ngStyle]="timeViewMeridian == 'PM' ? {background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()} : {background: color.secondary(), color: color.primary(), border: '1px solid '+color.primary()}">PM
+                  [ngStyle]="timeViewMeridian == 'PM' ? {background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()} : {background: color.secondary(), color: color.primary(), border: '1px solid '+color.primary()}">
+            PM
           </button>
         </div>
       </div>
       <div class="time-view-btn">
-        <button class="button" (click)="setTimeView()" [ngStyle]="{background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()}"><span class="fa fa-check"></span></button>
+        <button class="button" (click)="setTimeView()"
+                [ngStyle]="{background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()}">
+          <span class="fa fa-check"></span></button>
       </div>
     </div>
 
     <loconox-datetimepicker-calendar [hidden]="monthsView || yearView || timeView" (selectedChange)="select($event)"
-                                   [selected]="_selected" [viewDate]="viewDate" [parent]="this" [color]="color"></loconox-datetimepicker-calendar>
+                                     [selected]="_selected" [viewDate]="viewDate" [parent]="this"
+                                     [color]="color"></loconox-datetimepicker-calendar>
 
     <div class="cal-util" *ngIf="!settings.bigBanner" [ngStyle]="{background: color.secondary()}">
       <div class="icon" [ngStyle]="{color: color.primary()}">
-        <i class="fa fa-clock-o" aria-hidden="true" (click)="toggleTimeView()" [hidden]="timeView"></i>
-        <i class="fa fa-calendar" aria-hidden="true" (click)="toggleTimeView()" [hidden]="!timeView"></i>
+        <span [hidden]="timeView">
+        <i class="fa fa-clock-o" aria-hidden="true" (click)="toggleTimeView()"></i>
+        </span>
+        <span [hidden]="!timeView">
+        <i class="fa fa-calendar" aria-hidden="true" (click)="toggleTimeView()"></i>
+        </span>
       </div>
     </div>
   </div>

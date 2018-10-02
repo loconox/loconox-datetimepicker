@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  OnDestroy, ViewChild,
+  OnDestroy, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, AfterContentInit,
 } from '@angular/core';
 import {Settings} from './settings';
 import * as moment_ from 'moment';
@@ -39,6 +39,10 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
   timeView = false;
   yearView: Boolean = false;
   monthsView = false;
+
+  // placement
+  _top = false;
+  private _maxElementHeight = 375;
 
   defaultSettings: Settings = {
     defaultOpen: false,
@@ -149,7 +153,10 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
   @ViewChild(CalendarComponent) calendar: CalendarComponent;
 
-  constructor() {
+  @ViewChild('popover')
+  private _popover;
+
+  constructor(private _elementRef: ElementRef<HTMLElement>) {
     this.moment = moment;
     this.viewDate = moment();
     this._viewChanged.next(this.viewDate);
@@ -189,6 +196,7 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
       return;
     }
 
+    this._findPlacement();
     this._opened = true;
     this.openedStream.emit();
     if (e !== undefined) {
@@ -218,6 +226,13 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     this.close();
     this._inputSubscription.unsubscribe();
     this._disabledChange.complete();
+  }
+
+  private _findPlacement() {
+    const domRect = this._datepickerInput._elementRef.nativeElement.getBoundingClientRect();
+    const top = domRect.top, bottom = domRect.bottom + this._maxElementHeight;
+
+    this._top = bottom > window.innerHeight && this._maxElementHeight <= top;
   }
 
   initDate() {
@@ -252,7 +267,6 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     this.yearView = !this.yearView;
     this.monthsView = false;
     this.timeView = false;
-    //this._generateYearList('current');
   }
 
   toggleTimeView() {

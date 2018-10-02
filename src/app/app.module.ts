@@ -15,7 +15,7 @@ import {DateTimePickerExample} from './examples/datetimepicker';
 import {SimpleDatePickerExample} from './examples/simpledatepicker';
 import {DateTimePickerLocalizedExample} from './examples/datetimepickerlocalized';
 import {DatePickerColoredExample} from "./examples/datepickercolored";
-import {LoconoxDatetimePickerModule} from "loconox-datetimepicker";
+import {LoconoxDatetimePickerModule} from "../../lib/loconox-datetimepicker/src/lib/datetimepicker-module";
 
 @NgModule({
   declarations: [

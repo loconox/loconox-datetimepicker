@@ -17,9 +17,7 @@
     left: 50%;
     z-index: 9999999;
     overflow: hidden;
-    height: 90%;
     max-width: 320px;
-    transition: all .5s linear;
     transform: translateX(-50%);
 
     .lc-banner {
@@ -293,13 +291,20 @@
   }
 
   @media (min-width: 768px) {
+
+
+
     .lc-date-popover {
       width: 250px;
       position: absolute;
       top: 0;
-      height: auto;
       left: 0;
+      height: auto;
       transform: translateX(0);
+
+      &.placement-top {
+        transform: translateY(-100%) !important;
+      }
 
       .lc-banner {
         .lc-day-row {

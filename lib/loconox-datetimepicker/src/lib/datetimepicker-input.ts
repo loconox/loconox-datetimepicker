@@ -149,7 +149,7 @@ export class LoconoxDatetimePickerInput implements ControlValueAccessor, OnDestr
   private _localeSubscription = Subscription.EMPTY;
 
   constructor(
-    private _elementRef: ElementRef<HTMLInputElement>) {
+    public _elementRef: ElementRef<HTMLInputElement>) {
   }
 
   ngOnDestroy() {

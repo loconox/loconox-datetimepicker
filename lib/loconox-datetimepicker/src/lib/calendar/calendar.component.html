@@ -6,7 +6,7 @@
 <table class="calendar-days" (click)="_select($event);" [hidden]="hidden" [ngStyle]="{background: color.secondary(), color: color.primary()}">
   <tr *ngFor="let week of monthDays">
     <td *ngFor="let day of week"
-        [ngStyle]="day.date.isSame(_today, 'day') && day.day != null ?  {background: 'none', border: '1px solid ' + color.primary()} : day.date.isSame(selected, 'day') && day.day != null ? {background: color.primary(), color: color.secondary()} : {}"
+        [ngStyle]="day.date.isSame(selected, 'day') && day.day != null ? {background: color.primary(), color: color.secondary()} : day.date.isSame(_today, 'day') && day.day != null ?  {background: 'none', border: '1px solid ' + color.primary()} : {}"
         [loconoxHightlight]="{bg: color.primary(), color: color.secondary(), cond: day.day != null}"
       [ngClass]="{'calendar-day': day.day != null}">
       <span *ngIf="day.date.isValid()" [attr.data-label]="day.date.format('YYYY-MM-DD')">{{day.day}}</span>

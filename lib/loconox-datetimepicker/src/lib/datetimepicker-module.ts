@@ -20,7 +20,8 @@ const moment = moment_;
   ],
   declarations: [
     LoconoxDatetimePicker, ClickOutsideDirective, CalendarComponent, MatLoconoxDatetimePicker,
-    LoconoxDatetimePickerInput, YearView, LoconoxHighlightDirective, LoconoxOverpacityDirective, LoconoxOverStyleDirective
+    LoconoxDatetimePickerInput, YearView, LoconoxHighlightDirective, LoconoxOverpacityDirective,
+    LoconoxOverStyleDirective,
   ],
   exports: [
     LoconoxDatetimePicker, MatLoconoxDatetimePicker, LoconoxDatetimePickerInput
