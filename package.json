@@ -1,6 +1,8 @@
 {
   "name": "loconox-datetimepicker-example",
-  "version": "0.1.1",
+  "description": "A date and time picker for angular. Also compatibile with Material.",
+  "keywords": ["datetime", "picker", "datetimepicker", "datepicker", "material", "angular"],
+  "version": "0.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -60,7 +60,7 @@
         <div class="hour">
           <span class="fa fa-plus inc-btn" (click)="incHour()" [ngStyle]="{color: color.third(), opacity: 0.5}"
                 [lcStyleOver]="{color: color.third(0.3)}"></span>
-          <input type="number" value="{{hourValue}}" [(ngModel)]="hourValue" [ngStyle]="{color: color.primary()}"
+          <input type="number" value="{{_hourValue}}" [(ngModel)]="_hourValue" [ngStyle]="{color: color.primary()}"
                  autofocus/>
           <span class="fa fa-minus dec-btn" (click)="decHour()" [ngStyle]="{color: color.third(), opacity: 0.5}"
                 [lcStyleOver]="{color: color.third(0.3)}"></span>
@@ -69,7 +69,7 @@
         <div class="minutes">
           <span class="fa fa-plus inc-btn" (click)="incMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}"
                 [lcStyleOver]="{color: color.third(0.3)}"></span>
-          <input type="number" value="{{minValue}}" [(ngModel)]="minValue" [ngStyle]="{color: color.primary()}"/>
+          <input type="number" value="{{_minValue}}" [(ngModel)]="_minValue" [ngStyle]="{color: color.primary()}"/>
           <span class="fa fa-minus dec-btn" (click)="decMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}"
                 [lcStyleOver]="{color: color.third(0.3)}"></span>
         </div>

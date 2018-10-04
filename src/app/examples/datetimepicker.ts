@@ -5,7 +5,6 @@ import {Component} from '@angular/core';
 })
 export class DateTimePickerExample {
   title: string = "Datetime Picker Example";
-  date: Date = new Date();
   settings = {
     bigBanner: true,
     timePicker: true,

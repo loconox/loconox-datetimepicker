@@ -33,8 +33,8 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
   // Today
   viewDate: Moment;
 
-  hourValue = 0;
-  minValue = 0;
+  _hourValue = 0;
+  _minValue = 0;
   timeViewMeridian = '';
   timeView = false;
   yearView: Boolean = false;
@@ -120,6 +120,8 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
   set _selected(value: Moment | null) {
     this._validSelected = value;
+    this._hourValue = this._validSelected.hour();
+    this._minValue = this._validSelected.minute();
   }
 
   private _validSelected: Moment | null = null;
@@ -237,16 +239,16 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
   initDate() {
     const hourValue = this._selected.hours();
-    this.minValue = this._selected.minutes();
+    this._minValue = this._selected.minutes();
     if (!this.settings.hour24) {
       if (hourValue <= 11) {
         this.timeViewMeridian = 'AM';
       } else {
-        this.hourValue = hourValue - 12;
+        this._hourValue = hourValue - 12;
         this.timeViewMeridian = 'PM';
       }
       if (hourValue === 0 || hourValue === 12) {
-        this.hourValue = 12;
+        this._hourValue = 12;
       }
     }
   }
@@ -280,27 +282,28 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
   }
 
   setTimeView() {
+    let date = this._selected.clone();
     if (!this.settings.hour24) {
       if (this.timeViewMeridian === 'AM') {
-        if (this.hourValue === 12) {
-          this._selected.hours(0);
+        if (this._hourValue === 12) {
+          date.hours(0);
         } else {
-          this._selected.hours(this.hourValue);
+          date.hours(this._hourValue);
         }
-        this._selected.minutes(this.minValue);
+        date.minutes(this._minValue);
       } else {
-        if (this.hourValue === 12) {
-          this._selected.hours(this.hourValue);
+        if (this._hourValue === 12) {
+          date.hours(this._hourValue);
         } else {
-          this._selected.hours(this.hourValue + 12);
+          date.hours(this._hourValue + 12);
         }
-        this._selected.minutes(this.minValue);
+        date.minutes(this._minValue);
       }
     } else {
-      this._selected.hours(this.hourValue);
-      this._selected.minutes(this.minValue);
+      date.hours(this._hourValue);
+      date.minutes(this._minValue);
     }
-    this._selectedChanged.next(this._selected);
+    this._selectedChanged.next(date);
     this.timeView = !this.timeView;
   }
 
@@ -360,26 +363,26 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
   }
 
   incHour() {
-    if (!this.settings.hour24 && this.hourValue < 12 || this.settings.hour24 && this.hourValue < 24) {
-      this.hourValue += 1;
+    if (!this.settings.hour24 && this._hourValue < 12 || this.settings.hour24 && this._hourValue < 24) {
+      this._hourValue += 1;
     }
   }
 
   decHour() {
-    if (this.hourValue > 1) {
-      this.hourValue -= 1;
+    if (this._hourValue > 1) {
+      this._hourValue -= 1;
     }
   }
 
   incMinutes() {
-    if (this.minValue < 59) {
-      this.minValue += 1;
+    if (this._minValue < 59) {
+      this._minValue += 1;
     }
   }
 
   decMinutes() {
-    if (this.minValue > 0) {
-      this.minValue -= 1;
+    if (this._minValue > 0) {
+      this._minValue -= 1;
     }
   }
 

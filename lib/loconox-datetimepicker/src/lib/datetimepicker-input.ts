@@ -32,14 +32,14 @@ export const LOCONOX_datetimePicker_VALUE_ACCESSOR: any = {
  */
 export class LoconoxDatepickerInputEvent {
   /** The new value for the target datetimepicker input. */
-  value: Moment | null;
+  value: string | null;
 
   constructor(
     /** Reference to the datetimepicker input component that emitted the event. */
     public target: LoconoxDatetimePickerInput,
     /** Reference to the native input element associated with the datepicker input. */
     public targetElement: HTMLElement) {
-    this.value = this.target.value;
+    this.value = this.target.value !== null ? this.target.value.format(this.target.format) : null;
   }
 }
 
@@ -76,7 +76,6 @@ export class LoconoxDatetimePickerInput implements ControlValueAccessor, OnDestr
 
     this._datetimePickerSubscription = this._datetimePicker._selectedChanged.subscribe((selected: Moment) => {
       this.value = selected;
-      this._cvaOnChange(selected);
       this._onTouched();
       this.dateInput.emit(new LoconoxDatepickerInputEvent(this, this._elementRef.nativeElement));
       this.dateChange.emit(new LoconoxDatepickerInputEvent(this, this._elementRef.nativeElement));
@@ -97,6 +96,7 @@ export class LoconoxDatetimePickerInput implements ControlValueAccessor, OnDestr
 
     if (oldDate !== undefined && !this._sameDate(oldDate, value)) {
       this._valueChange.emit(value);
+      this._cvaOnChange(value !== null ? value.format(this.format) : value);
     }
   }
   protected _value: Moment | null;
@@ -146,21 +146,19 @@ export class LoconoxDatetimePickerInput implements ControlValueAccessor, OnDestr
 
   private _datetimePickerSubscription = Subscription.EMPTY;
 
-  private _localeSubscription = Subscription.EMPTY;
-
   constructor(
     public _elementRef: ElementRef<HTMLInputElement>) {
   }
 
   ngOnDestroy() {
     this._datetimePickerSubscription.unsubscribe();
-    this._localeSubscription.unsubscribe();
     this._valueChange.complete();
     this._disabledChange.complete();
   }
 
   // Implemented as part of ControlValueAccessor.
-  writeValue(value: Moment): void {
+  writeValue(value: Moment|string|Date): void {
+    value = this._deserialize(value);
     this.value = value;
   }
 
@@ -188,15 +186,21 @@ export class LoconoxDatetimePickerInput implements ControlValueAccessor, OnDestr
     }
   }
 
+  /**
+   * Function called on user input. Always string.
+   *
+   * @param value
+   */
   _onInput(value: string) {
-    let date = moment(value, this.format);
+    let date: Moment;
+    date = this._deserialize(value);
     this._lastValueValid = !date || date.isValid();
     date = this._getValidDateOrNull(date);
 
-    if (this._lastValueValid && !date.isSame(this._value)) {
+    if (this._lastValueValid) {
       this._value = date;
-      this._cvaOnChange(date);
       this._valueChange.emit(date);
+      this._cvaOnChange(date !== null ? date.format(this.format) : date);
       this.dateInput.emit(new LoconoxDatepickerInputEvent(this, this._elementRef.nativeElement));
     }
   }
@@ -221,9 +225,25 @@ export class LoconoxDatetimePickerInput implements ControlValueAccessor, OnDestr
       value ? value.format(this.format) : '';
   }
 
-  protected _deserialize(value: any) {
-    if (value == null || moment.isMoment(value) && value.clone().isValid()) {
+  protected _deserialize(value: any): Moment {
+    let date;
+    if (value === null) {
       return value;
+    }
+    if (value instanceof Date) {
+      date = moment(value);
+    }
+    if (typeof value === 'string') {
+      if (!value) {
+        return null;
+      }
+      date = moment(value, this.format);
+    }
+    if (moment.isMoment(value)) {
+      date = value;
+    }
+    if (date.clone(date).isValid()) {
+      return date;
     }
     return moment.invalid();
   }
