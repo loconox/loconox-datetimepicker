@@ -120,6 +120,7 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
   set _selected(value: Moment | null) {
     this._validSelected = value;
+    this.viewDate = this._validSelected.clone();
     this._hourValue = this._validSelected.hour();
     this._minValue = this._validSelected.minute();
   }
@@ -311,7 +312,6 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     if (!this._selected) {
       this._selected = this.viewDate.clone();
     }
-    this._selected.years(selectedYear);
     this.viewDate.year(selectedYear);
     this._viewChanged.next(this.viewDate);
     this.yearView = !this.yearView;

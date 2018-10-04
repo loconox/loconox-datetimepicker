@@ -19,7 +19,7 @@ export class DateTimePickerLocalizedExample {
     hour24: true,
   };
   format = 'YYYY-MM-DD HH:mm';
-  date = '2018-10-01 12:10';
+  date = '2017-05-01 12:10';
 
   onChange(e: LoconoxDatetimePickerInput) {
     console.log(e.value);
