@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Input,
   Output,
-  OnDestroy, ViewChild, ElementRef, AfterViewInit, AfterViewChecked, AfterContentInit,
+  OnDestroy, ViewChild, ElementRef,
 } from '@angular/core';
 import {Settings} from './settings';
 import * as moment_ from 'moment';

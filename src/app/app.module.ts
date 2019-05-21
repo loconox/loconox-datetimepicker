@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRouterModule} from './app.router';
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {RouterModule} from "@angular/router";
@@ -30,7 +30,7 @@ import {LoconoxDatetimePickerModule} from "../../lib/loconox-datetimepicker/src/
   imports: [
     BrowserModule,
     LoconoxDatetimePickerModule,
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
     AppRouterModule,
     AngularFontAwesomeModule,
     RouterModule,

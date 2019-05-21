@@ -61,7 +61,16 @@ export class LoconoxDatepickerInputEvent {
 })
 export class LoconoxDatetimePickerInput implements ControlValueAccessor, OnDestroy {
 
-  @Input() format: string = 'YYYY-MM-DD';
+  get format(): string {
+    return this._format;
+  }
+  @Input()
+  set format(value: string) {
+    this._format = value;
+    this._formatValue(this._value);
+  }
+  private _format: string = 'YYYY-MM-DD';
+
 
   /** The datetimepicker that this input is associated with. */
   @Input()
