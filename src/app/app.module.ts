@@ -7,7 +7,9 @@ import {AppRouterModule} from './app.router';
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {RouterModule} from "@angular/router";
 import {MatDatePickerExample} from "./examples/mat-datetimepicker";
-import {MatFormFieldModule, MatIconModule, MatInputModule} from "@angular/material";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import {DatePickerExample} from './examples/datepicker';

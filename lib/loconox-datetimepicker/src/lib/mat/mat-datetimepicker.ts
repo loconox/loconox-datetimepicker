@@ -1,6 +1,6 @@
 import {Directive, ElementRef, forwardRef, HostBinding, Input, OnDestroy, Optional, Self} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from "@angular/forms";
-import {MatFormFieldControl} from "@angular/material";
+import { MatFormFieldControl } from "@angular/material/form-field";
 import {Subject} from "rxjs";
 import {FocusMonitor} from "@angular/cdk/a11y";
 import {coerceBooleanProperty} from "@angular/cdk/coercion";

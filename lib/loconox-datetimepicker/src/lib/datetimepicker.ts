@@ -12,7 +12,6 @@ import {coerceBooleanProperty} from "@angular/cdk/coercion";
 import {Subject, Subscription} from "rxjs";
 import {Moment} from "moment";
 import {LoconoxDatetimePickerInput} from "./datetimepicker-input";
-import {CalendarComponent} from "./calendar/calendar.component";
 import {LoconoxDatetimePickerColor} from "./color";
 
 const moment = moment_;
@@ -154,9 +153,7 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
   private _touchUi = false;
 
-  @ViewChild(CalendarComponent) calendar: CalendarComponent;
-
-  @ViewChild('popover')
+  @ViewChild('popover', { static: false })
   private _popover;
 
   constructor(private _elementRef: ElementRef<HTMLElement>) {
