@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {LoconoxDatetimePickerColor} from "loconox-datetimepicker";
 
 @Component({
-  templateUrl: './views/datepickercolored.html',
+  templateUrl: './datepickercolored.html',
 })
 export class DatePickerColoredExample {
   title = 'Colored Example';

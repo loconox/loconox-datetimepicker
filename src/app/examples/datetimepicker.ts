@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  templateUrl: './views/datetimepicker.html',
+  templateUrl: './datetimepicker.html',
 })
 export class DateTimePickerExample {
   title: string = "Datetime Picker Example";

@@ -98,9 +98,10 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   _generateDays(month: number, year: number) {
+    // Add one month to be compatible with moment.js january = 1
     month++;
-    const firstDay = new Date(year, month, 1);
-    const startingDay = firstDay.getDay();
+    const firstDay = moment(year + '/'+ month + '/'+ 1, 'YYYY/M/D');
+    const startingDay = firstDay.weekday();
     const monthLength = this.getMonthLength(month, year);
     let day = 1;
     const dateArr = [];

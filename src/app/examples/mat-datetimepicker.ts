@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  templateUrl: './views/mat-datetimepicker.html',
+  templateUrl: './mat-datetimepicker.html',
 })
 export class MatDatePickerExample {
   title = 'Material DateTime Picker Example';

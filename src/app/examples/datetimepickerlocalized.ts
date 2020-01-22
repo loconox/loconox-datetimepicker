@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {
-  LoconoxDatepickerInputEvent,
   LoconoxDatetimePickerInput
 } from "../../../lib/loconox-datetimepicker/src/lib/datetimepicker-input";
 
 @Component({
-  templateUrl: './views/datetimepickerlocalized.html',
+  templateUrl: './datetimepickerlocalized.html',
 })
 export class DateTimePickerLocalizedExample {
 

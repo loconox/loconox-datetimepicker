@@ -1,0 +1,11 @@
+<h2 class="example-title">{{title}}</h2>
+<div class="col-md-6 mr-auto ml-auto dropdown-container">
+  <div>
+    <input [loconoxDatetimePicker]="picker" (click)="picker.open($event)" [format]="'YYYY-MM-DD hh:mm'" [formControl]="control" (dateChange)="onChange($event)">
+    <loconox-datetimepicker #picker [settings]="settings"></loconox-datetimepicker>
+  </div>
+  <div>
+    <label>FormControl value</label>
+    <p>{{control.value}}</p>
+  </div>
+</div>
