@@ -1,0 +1,39 @@
+<div class="time-view" [hidden]="hidden" [ngStyle]="{background: color.secondary()}">
+  <div class="time">
+    <div class="hour">
+          <span class="fa fa-plus inc-btn" (click)="incHour()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+                [lcStyleOver]="{color: color.third(0.3)}"></span>
+      <input type="number" value="{{_hourValue}}" [(ngModel)]="_hourValue" [ngStyle]="{color: color.primary()}"
+             autofocus/>
+      <span class="fa fa-minus dec-btn" (click)="decHour()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+            [lcStyleOver]="{color: color.third(0.3)}"></span>
+    </div>
+    <div class="time-divider" [ngStyle]="{color: color.third()}">:</div>
+    <div class="minutes">
+          <span class="fa fa-plus inc-btn" (click)="incMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+                [lcStyleOver]="{color: color.third(0.3)}"></span>
+      <input type="number" value="{{_minValue}}" [(ngModel)]="_minValue" [ngStyle]="{color: color.primary()}"/>
+      <span class="fa fa-minus dec-btn" (click)="decMinutes()" [ngStyle]="{color: color.third(), opacity: 0.5}"
+            [lcStyleOver]="{color: color.third(0.3)}"></span>
+    </div>
+  </div>
+  <div class="meridian" *ngIf="!hour24">
+    <div class="loconox-btn-group">
+      <button [ngClass]="{'active': _timeViewMeridian == 'AM'}" class="button" ng-model="timeViewMeridian"
+              (click)="toggleMeridian('AM')"
+              [ngStyle]="_timeViewMeridian == 'AM' ? {background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()} : {background: color.secondary(), color: color.primary(), border: '1px solid '+color.primary()}">
+        AM
+      </button>
+      <button [ngClass]="{'active': _timeViewMeridian == 'PM'}" class="button" ng-model="timeViewMeridian"
+              (click)="toggleMeridian('PM')"
+              [ngStyle]="_timeViewMeridian == 'PM' ? {background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()} : {background: color.secondary(), color: color.primary(), border: '1px solid '+color.primary()}">
+        PM
+      </button>
+    </div>
+  </div>
+  <div class="time-view-btn">
+    <button class="button" (click)="setTimeView()"
+            [ngStyle]="{background: color.primary(), color: color.secondary(), border: '1px solid '+color.primary()}">
+      <span class="fa fa-check"></span></button>
+  </div>
+</div>

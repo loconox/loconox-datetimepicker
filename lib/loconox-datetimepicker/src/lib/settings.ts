@@ -1,8 +1,8 @@
 export interface Settings{
-    bigBanner?: Boolean;
-    timePicker: Boolean;
-    defaultOpen?: Boolean;
+    bigBanner?: boolean;
+    timePicker: boolean;
+    defaultOpen?: boolean;
     closeOnSelect?: boolean;
     locale: string;
-    hour24: false;
+    hour24: boolean;
 }

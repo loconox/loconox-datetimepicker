@@ -8,6 +8,7 @@ export class DateTimePickerExample {
   settings = {
     bigBanner: true,
     timePicker: true,
-    defaultOpen: true
+    defaultOpen: true,
+    hour24: false
   };
 }

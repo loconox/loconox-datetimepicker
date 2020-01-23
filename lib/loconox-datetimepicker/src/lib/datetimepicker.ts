@@ -26,31 +26,28 @@ let datetimepickerUid = 0;
 })
 export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
-  // To be usable in view
-  moment: any;
-
-  // Today
-  viewDate: Moment;
-
-  _hourValue = 0;
-  _minValue = 0;
-  timeViewMeridian = '';
-  timeView = false;
-  yearView: Boolean = false;
-  monthsView = false;
-
-  // placement
-  _top = false;
-  private _maxElementHeight = 375;
-
   defaultSettings: Settings = {
     defaultOpen: false,
     bigBanner: true,
     timePicker: false,
     closeOnSelect: true,
     locale: 'en',
-    hour24: false
+    hour24: true
   };
+
+  // To be usable in view
+  moment: any;
+
+  // Today
+  viewDate: Moment;
+
+  timeView: boolean = false;
+  yearView: boolean = false;
+  monthsView: boolean = false;
+
+  // placement
+  _top = false;
+  private _maxElementHeight = 375;
 
   private _defaultColor: LoconoxDatetimePickerColor = new LoconoxDatetimePickerColor({
     primary: '#1565c0',
@@ -120,8 +117,6 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
   set _selected(value: Moment | null) {
     this._validSelected = value;
     this.viewDate = this._validSelected.clone();
-    this._hourValue = this._validSelected.hour();
-    this._minValue = this._validSelected.minute();
   }
 
   private _validSelected: Moment | null = null;
@@ -153,28 +148,13 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
 
   private _touchUi = false;
 
-  @ViewChild('popover', { static: false })
+  @ViewChild('popover', {static: false})
   private _popover;
 
   constructor(private _elementRef: ElementRef<HTMLElement>) {
     this.moment = moment;
     this.viewDate = moment();
     this._viewChanged.next(this.viewDate);
-  }
-
-  /** Selects the given date */
-  select(date: Moment): void {
-    let oldValue = this._selected;
-    this._selected = date;
-    this.initDate();
-    if (!this._sameDate(oldValue, this._selected)) {
-      this._selectedChanged.next(date);
-      this._viewChanged.next(date);
-    }
-
-    if (this.settings.closeOnSelect) {
-      this._opened = false;
-    }
   }
 
   /**
@@ -235,22 +215,6 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     this._top = bottom > window.innerHeight && this._maxElementHeight <= top;
   }
 
-  initDate() {
-    const hourValue = this._selected.hours();
-    this._minValue = this._selected.minutes();
-    if (!this.settings.hour24) {
-      if (hourValue <= 11) {
-        this.timeViewMeridian = 'AM';
-      } else {
-        this._hourValue = hourValue - 12;
-        this.timeViewMeridian = 'PM';
-      }
-      if (hourValue === 0 || hourValue === 12) {
-        this._hourValue = 12;
-      }
-    }
-  }
-
   getMonthLength(month: number, year: number): number {
     const monthLength = moment(year + '-' + month, 'YYYY-MM').endOf('month').format('DD');
 
@@ -275,55 +239,53 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
     this.timeView = !this.timeView;
   }
 
-  toggleMeridian(val: string) {
-    this.timeViewMeridian = val;
-  }
-
-  setTimeView() {
-    let date = this._selected.clone();
-    if (!this.settings.hour24) {
-      if (this.timeViewMeridian === 'AM') {
-        if (this._hourValue === 12) {
-          date.hours(0);
-        } else {
-          date.hours(this._hourValue);
-        }
-        date.minutes(this._minValue);
-      } else {
-        if (this._hourValue === 12) {
-          date.hours(this._hourValue);
-        } else {
-          date.hours(this._hourValue + 12);
-        }
-        date.minutes(this._minValue);
-      }
-    } else {
-      date.hours(this._hourValue);
-      date.minutes(this._minValue);
-    }
-    this._selectedChanged.next(date);
-    this.timeView = !this.timeView;
-  }
-
   setYear(selectedYear: number) {
-    if (!this._selected) {
-      this._selected = this.viewDate.clone();
-    }
     this.viewDate.year(selectedYear);
     this._viewChanged.next(this.viewDate);
     this.yearView = !this.yearView;
   }
 
-  setMonth(evt: any) {
-    if (evt.target.getAttribute('id')) {
-      const selectedMonth = moment.monthsShort().indexOf(evt.target.getAttribute('id'));
-      if (!this._selected) {
-        this._selected = this.viewDate.clone();
-      }
-      this._selected.month(selectedMonth);
-      this.viewDate.month(selectedMonth);
+  setMonth(selectedMonth: number) {
+    this.viewDate.month(selectedMonth);
+    this._viewChanged.next(this.viewDate);
+    this.monthsView = !this.monthsView;
+  }
+
+  setTime(time: {hour: number, minute: number}) {
+    if (!this._selected) {
+      this._selected = this.viewDate.clone();
+    }
+    this.viewDate.hours(time.hour);
+    this.viewDate.minutes(time.minute);
+    this._selected.hours(time.hour);
+    this._selected.minutes(time.minute);
+    this._viewChanged.next(this.viewDate);
+    this._selectedChanged.next(this._selected);
+    this.timeView = !this.timeView;
+    if (this.settings.closeOnSelect) {
+      this._opened = false;
+    }
+  }
+
+  /** Selects the given date */
+  setDay(date: Moment): void {
+    let oldValue = moment.isMoment(this._selected) ? this._selected.clone() : this._selected;
+    if (!this._selected) {
+      this._selected = this.viewDate.clone();
+    }
+    this._selected.year(date.year());
+    this._selected.month(date.month());
+    this._selected.date(date.date());
+    this.viewDate.year(date.year());
+    this.viewDate.month(date.month());
+    this.viewDate.date(date.date());
+    if (!this._sameDate(oldValue, this._selected)) {
       this._viewChanged.next(this.viewDate);
-      this.monthsView = !this.monthsView;
+      this._selectedChanged.next(this._selected);
+    }
+    if (this.settings.timePicker) {
+      this.toggleTimeView();
+      return;
     }
   }
 
@@ -357,30 +319,6 @@ export class LoconoxDatetimePicker implements OnInit, OnDestroy {
       this.viewDate.month(this.viewDate.month() + 1);
     }
     this._viewChanged.next(this.viewDate);
-  }
-
-  incHour() {
-    if (!this.settings.hour24 && this._hourValue < 12 || this.settings.hour24 && this._hourValue < 24) {
-      this._hourValue += 1;
-    }
-  }
-
-  decHour() {
-    if (this._hourValue > 1) {
-      this._hourValue -= 1;
-    }
-  }
-
-  incMinutes() {
-    if (this._minValue < 59) {
-      this._minValue += 1;
-    }
-  }
-
-  decMinutes() {
-    if (this._minValue > 0) {
-      this._minValue -= 1;
-    }
   }
 
   /**

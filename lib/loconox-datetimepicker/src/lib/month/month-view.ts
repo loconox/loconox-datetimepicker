@@ -8,14 +8,11 @@ import {LoconoxDatetimePickerColor} from "../color";
 const moment = moment_;
 
 @Component({
-  selector: 'loconox-datetimepicker-year-view',
-  templateUrl: './year-view.html',
-  styleUrls: ['./year-view.scss']
+  selector: 'loconox-datetimepicker-month-view',
+  templateUrl: './month-view.html',
+  styleUrls: ['./month-view.scss']
 })
-export class YearView implements OnDestroy {
-
-
-  yearsList: Array<any> = [];
+export class MonthView implements OnDestroy {
 
   /** The datetimepicker that this input is associated with. */
   @Input()
@@ -46,7 +43,6 @@ export class YearView implements OnDestroy {
 
   set viewDate(value: Moment | null) {
     this._viewDate = value;
-    this.generateYearList('current');
   }
 
   private _viewDate: Moment | null;
@@ -54,31 +50,16 @@ export class YearView implements OnDestroy {
   // To be usable in view
   moment: any;
 
-  @Output() readonly yearChange: EventEmitter<number> = new EventEmitter();
+  @Output() readonly monthChange: EventEmitter<number> = new EventEmitter();
 
   constructor() {
     this.moment = moment;
   }
 
-  generateYearList(param: string) {
-    let startYear = null;
-    if (param === 'next') {
-      startYear = this.yearsList[8] + 1;
-    } else if (param === 'prev') {
-      startYear = this.yearsList[0] - 9;
-    } else {
-      const currentYear = this.viewDate.year();
-      startYear = currentYear - 4;
-    }
-    for (let k = 0; k < 9; k++) {
-      this.yearsList[k] = startYear + k;
-    }
-  }
-
-  selectYear(evt: any) {
+  setMonth(evt: any) {
     if (evt.target.getAttribute('id')) {
-      const selectedYear = parseInt(evt.target.getAttribute('id'), 10);
-      this.yearChange.emit(selectedYear);
+      const selectedMonth = moment.monthsShort().indexOf(evt.target.getAttribute('id'));
+      this.monthChange.emit(selectedMonth);
     }
   }
 

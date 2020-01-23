@@ -11,6 +11,8 @@ import {YearView} from "./year/year-view";
 import {LoconoxHighlightDirective} from "./highlight";
 import {LoconoxOverpacityDirective} from "./overpacity";
 import {LoconoxOverStyleDirective} from "./overstyle";
+import {MonthView} from "./month/month-view";
+import {TimeView} from "./time/time-view";
 
 const moment = moment_;
 
@@ -21,7 +23,7 @@ const moment = moment_;
   declarations: [
     LoconoxDatetimePicker, ClickOutsideDirective, CalendarComponent, MatLoconoxDatetimePicker,
     LoconoxDatetimePickerInput, YearView, LoconoxHighlightDirective, LoconoxOverpacityDirective,
-    LoconoxOverStyleDirective,
+    LoconoxOverStyleDirective, MonthView, TimeView
   ],
   exports: [
     LoconoxDatetimePicker, MatLoconoxDatetimePicker, LoconoxDatetimePickerInput

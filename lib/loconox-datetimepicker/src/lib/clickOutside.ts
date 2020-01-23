@@ -13,13 +13,21 @@ export class ClickOutsideDirective {
 
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: HTMLElement): void {
+    console.log(this._elementRef, targetElement);
     if (!targetElement) {
       return;
     }
 
-    const clickedInside = this._elementRef.nativeElement.contains(targetElement);
-    if (!clickedInside) {
+    //const clickedInside = this._elementRef.nativeElement.contains(targetElement);
+
+
+    if (!this.childOf(targetElement, this._elementRef.nativeElement)) {
       this.clickOutside.emit();
     }
+  }
+
+  private childOf(child, parent) {
+    while ((child = child.parentNode) && child !== parent) ;
+    return !!child;
   }
 }

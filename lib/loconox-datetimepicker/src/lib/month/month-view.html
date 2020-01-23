@@ -1,0 +1,6 @@
+<div class="months-view"  [hidden]="hidden" (click)="setMonth($event)"
+     [ngStyle]="{background: color.secondary(), color: color.primary()}">
+        <span *ngFor="let month of moment.monthsShort()"
+              [ngStyle]="month == moment.monthsShort(viewDate.month()) ?  {background: 'none', border: '1px solid ' + color.primary()} : {}"
+              [loconoxHightlight]="{bg: color.primary(), color: color.secondary()}" id="{{month}}">{{month}}</span>
+</div>

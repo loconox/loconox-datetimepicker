@@ -31,6 +31,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.viewDate = date;
     });
   }
+
   _parent: LoconoxDatetimePicker;
 
   private _parentViewSubscription = Subscription.EMPTY;
@@ -51,15 +52,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   private _selected: Moment | null = null;
 
-  @Input()
-  get viewDate(): Moment | null {
-    return this._viewDate;
-  }
+  private month: number;
+  private year: number;
 
+  @Input()
   set viewDate(value: Moment | null) {
-    this._viewDate = value;
-    if (this._viewDate) {
-      this._generateDays(this._viewDate.month(), this.viewDate.year());
+    if (this.month != value.month() || this.year != value.year()) {
+      this.month = value.month();
+      this.year = value.year();
+      this._generateDays(this.month, this.year);
     }
   }
 
@@ -68,7 +69,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   // To be usable in view
   moment: any;
 
-  @Output() readonly selectedChange: EventEmitter<Moment> = new EventEmitter();
+  @Output() readonly dayChange: EventEmitter<Moment> = new EventEmitter();
 
   constructor() {
     this.moment = moment;
@@ -77,15 +78,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
   _select(evt: any) {
     if (evt.target.innerHTML) {
       const selectedDay = moment(evt.target.getAttribute('data-label'), 'YYYY-MM-DD');
-      if (selectedDay.isValid() && this.selectedChange) {
+      if (selectedDay.isValid() && this.dayChange) {
         if (this._selected) {
           const date = this._selected.clone();
           date.year(selectedDay.year());
           date.month(selectedDay.month());
           date.date(selectedDay.date());
-          this.selectedChange.emit(date);
+          this.dayChange.emit(date);
         } else {
-          this.selectedChange.emit(selectedDay);
+          this.dayChange.emit(selectedDay);
         }
       }
     }
@@ -100,7 +101,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   _generateDays(month: number, year: number) {
     // Add one month to be compatible with moment.js january = 1
     month++;
-    const firstDay = moment(year + '/'+ month + '/'+ 1, 'YYYY/M/D');
+    const firstDay = moment(year + '/' + month + '/' + 1, 'YYYY/M/D');
     const startingDay = firstDay.weekday();
     const monthLength = this.getMonthLength(month, year);
     let day = 1;
@@ -126,11 +127,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
         dateArr.push(dateRow);
       }
     }
-    this.monthDays =  dateArr;
+    this.monthDays = dateArr;
   }
 
   ngOnInit(): void {
-    this._generateDays(this.viewDate.month(), this.viewDate.year());
+    // this._generateDays(this.month, this.year);
   }
 
   ngOnDestroy(): void {
