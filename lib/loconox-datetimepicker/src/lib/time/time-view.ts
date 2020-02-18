@@ -22,7 +22,6 @@ export class TimeView implements OnDestroy {
   }
 
   set _timeViewMeridian(value) {
-    console.log(value);
     this.__timeViewMeridian = value;
   }
 

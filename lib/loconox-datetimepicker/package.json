@@ -2,7 +2,7 @@
   "name": "loconox-datetimepicker",
   "description": "A date and time picker for angular. Also compatibile with Material.",
   "keywords": ["datetime", "picker", "datetimepicker", "datepicker", "material", "angular"],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "peerDependencies": {
     "@angular/common": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "@angular/core": "^6.0.0 || ^7.0.0 || ^8.0.0",

@@ -13,7 +13,6 @@ export class ClickOutsideDirective {
 
   @HostListener('document:click', ['$event.target'])
   public onClick(targetElement: HTMLElement): void {
-    console.log(this._elementRef, targetElement);
     if (!targetElement) {
       return;
     }
